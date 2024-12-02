@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Recognition System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: #eeeee4;  /* Gray background */
+            color: white;
+            padding-top: 20px;
+            box-sizing: border-box;
+        }
+
+        .sidebar button {
+            display: block;
+            padding: 12px;
+            margin: 10px;
+            color: white;
+            background-color: #DFDB4D;
+            border: none;
+            width: 170px;
+            cursor: pointer;
+            text-align: center;
+            border-radius: 5px;  /* Small border-radius */
+            transition: background-color 0.3s ease;  /* Smooth hover transition */
+        }
+
+        .sidebar button:hover {
+            background-color: #86a700;  /* Darker yellow on hover */
+        }
+
+        /* Main content styling */
+        .content {
+            margin-left: 240px;  /* Space for the sidebar */
+            padding: 20px;
+        }
+
+        /* Hide all sections by default */
+        .section {
+            display: none;
+        }
+
+        /* Show active section */
+        .active {
+            display: block;
+        }
+
+        /* Header Section */
+        .header {
+            background-color: #DFDB4D;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+        }
+
+        /* Container for content */
+        .container {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            line-height: 1.8;  /* Increased line spacing */
+        }
+
+        .container h2 {
+            text-align: center;
+        }
+
+        .container img {
+            width: 100%;
+            height: auto;  /* Ensures image scales with width */
+            display: block;
+            margin: 0 auto;
+        }
+
+        .container h3, .container p, .container ol, .container ul {
+            margin-bottom: 20px; /* Increased spacing between paragraphs, lists */
+        }
+
+        .container ol, .container ul {
+            padding-left: 20px;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <button onclick="showSection('home')">Home</button>
+        <button onclick="showSection('about')">About</button>
+        <button onclick="showSection('disease-recognition')">Disease Recognition</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+
+        <!-- Home Section -->
+        <div id="home" class="section active">
+            <div class="header">
+                <h2>PLANT DISEASE RECOGNITION SYSTEM</h2>
+            </div>
+            <img src="home_page.jpeg" alt="Plant Disease Recognition" />
+
+            <div class="container">
+                <p>Welcome to the Plant Disease Recognition System! 🌿🔍</p>
+                <p>Our mission is to help in identifying plant diseases efficiently. Upload an image of a plant, and our system will analyze it to detect any signs of diseases. Together, let's protect our crops and ensure a healthier harvest!</p>
+
+                <h3>How It Works</h3>
+                <ol>
+                    <li><strong>Upload Image:</strong> Go to the <strong>Disease Recognition</strong> page and upload an image of a plant with suspected diseases.</li>
+                    <li><strong>Analysis:</strong> Our system will process the image using advanced algorithms to identify potential diseases.</li>
+                    <li><strong>Results:</strong> View the results and recommendations for further action.</li>
+                </ol>
+
+                <h3>Why Choose Us?</h3>
+                <ul>
+                    <li><strong>Accuracy:</strong> Our system utilizes state-of-the-art machine learning techniques for accurate disease detection.</li>
+                    <li><strong>User-Friendly:</strong> Simple and intuitive interface for seamless user experience.</li>
+                    <li><strong>Fast and Efficient:</strong> Receive results in seconds, allowing for quick decision-making.</li>
+                </ul>
+
+                <h3>Get Started</h3>
+                <p>Click on the <strong>Disease Recognition</strong> page in the sidebar to upload an image and experience the power of our Plant Disease Recognition System!</p>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div id="about" class="section">
+            <div class="header">
+                <h2>About the Project</h2>
+            </div>
+            <div class="container">
+                <h3>About the Dataset</h3>
+                <p>This dataset has been augmented offline from the original dataset to increase its size and variability. The original dataset can be found on the <a href="https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset" target="_blank">New Plant Disease Dataset</a> page on Kaggle. This augmented dataset consists of approximately 87,000 RGB images of healthy and diseased crop leaves, categorized into 38 different classes.</p>
+
+                <h3>Dataset Structure</h3>
+                <ul>
+                    <li><strong>Training set:</strong> 70,295 images</li>
+                    <li><strong>Validation set:</strong> 17,572 images</li>
+                    <li><strong>Test set:</strong> 33 images</li>
+                </ul>
+                <p>The dataset is a valuable resource for training and evaluating models for plant disease detection, providing a diverse set of images to ensure robust model performance.</p>
+            </div>
+        </div>
+
+        <!-- Disease Recognition Section -->
+        <div id="disease-recognition" class="section">
+            <div class="header">
+                <h2>Disease Recognition</h2>
+            </div>
+            <div class="container">
+                <h3>Upload Image and Get Predictions</h3>
+                <p>Upload a plant image to detect potential diseases.</p>
+                <input type="file" id="image-upload">
+                <button onclick="predictDisease()">Predict Disease</button>
+                <div id="prediction-result"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Function to display the selected section and hide others
+        function showSection(sectionId) {
+            // Get all sections
+            const sections = document.querySelectorAll('.section');
+
+            // Hide all sections
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show the clicked section
+            document.getElementById(sectionId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
